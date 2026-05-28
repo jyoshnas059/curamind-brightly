@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CuraMind — Sign In</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="stylesheet" href="css/auth.css"/>
+</head>
+<body class="auth-page">
+
+  <div class="auth-wrapper">
+    <!-- Left brand panel -->
+    <div class="auth-brand">
+      <div class="brand-logo">🌿 CuraMind</div>
+      <h2 class="brand-tagline">Know your <em>health</em>.<br>Find your <em>care</em>.</h2>
+      <p class="brand-sub">Your personal wellness companion — tracking vitals, mood, symptoms and more, all in one calm space.</p>
+      <div class="brand-features">
+        <div class="bf-item"><span>📊</span> Health Dashboard</div>
+        <div class="bf-item"><span>🧠</span> Mental Wellness</div>
+        <div class="bf-item"><span>🔍</span> AI Symptom Checker</div>
+        <div class="bf-item"><span>🔒</span> HIPAA-grade Privacy</div>
+      </div>
+    </div>
+
+    <!-- Right form panel -->
+    <div class="auth-form-panel">
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="showTab('login')">Sign In</button>
+        <button class="auth-tab" id="tab-register" onclick="showTab('register')">Create Account</button>
+      </div>
+
+      <!-- LOGIN -->
+      <div class="auth-form" id="form-login">
+        <h1 class="form-title">Welcome back</h1>
+        <p class="form-sub">Sign in to continue your wellness journey.</p>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="login-email" placeholder="you@example.com" autocomplete="email"/>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="login-password" placeholder="Your password" autocomplete="current-password"/>
+        </div>
+        <div class="form-error" id="login-error"></div>
+        <button class="btn-submit" id="btn-login" onclick="handleLogin()">
+          <span class="btn-text">Sign In →</span>
+          <span class="btn-loading" style="display:none">Signing in…</span>
+        </button>
+        <p class="form-switch">No account? <a href="#" onclick="showTab('register')">Create one free</a></p>
+      </div>
+
+      <!-- REGISTER -->
+      <div class="auth-form" id="form-register" style="display:none">
+        <h1 class="form-title">Get started</h1>
+        <p class="form-sub">Create your free CuraMind account — takes 2 minutes.</p>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="reg-name" placeholder="Your name" autocomplete="name"/>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="reg-email" placeholder="you@example.com" autocomplete="email"/>
+        </div>
+        <div class="form-group">
+          <label>Password <span class="label-hint">(min 6 characters)</span></label>
+          <input type="password" id="reg-password" placeholder="Choose a password" autocomplete="new-password"/>
+        </div>
+        <div class="form-error" id="reg-error"></div>
+        <button class="btn-submit" id="btn-register" onclick="handleRegister()">
+          <span class="btn-text">Create Account →</span>
+          <span class="btn-loading" style="display:none">Creating…</span>
+        </button>
+        <p class="form-switch">Already have an account? <a href="#" onclick="showTab('login')">Sign in</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script>
+    // Already logged in → go to app
+    if (Auth.isLoggedIn()) {
+      // Check if profile already set up
+      if (localStorage.getItem('cm_targets')) {
+        window.location.href = 'index.html';
+      } else {
+        window.location.href = 'onboarding.html';
+      }
+    }
+
+    function showTab(tab) {
+      document.getElementById('form-login').style.display    = tab === 'login'    ? 'block' : 'none';
+      document.getElementById('form-register').style.display = tab === 'register' ? 'block' : 'none';
+      document.getElementById('tab-login').classList.toggle('active',    tab === 'login');
+      document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+    }
+
+    function setLoading(btnId, loading) {
+      const btn = document.getElementById(btnId);
+      btn.querySelector('.btn-text').style.display    = loading ? 'none'   : 'inline';
+      btn.querySelector('.btn-loading').style.display = loading ? 'inline' : 'none';
+      btn.disabled = loading;
+    }
+
+    function showError(id, msg) {
+      const el = document.getElementById(id);
+      el.textContent = msg;
+      el.style.display = msg ? 'block' : 'none';
+    }
+
+    // After login/register → check if first time or returning user
+    function redirectAfterAuth() {
+      if (localStorage.getItem('cm_targets')) {
+        window.location.href = 'index.html';   // returning user → dashboard
+      } else {
+        window.location.href = 'onboarding.html'; // new user → profile setup
+      }
+    }
+
+    async function handleLogin() {
+      const email    = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      showError('login-error', '');
+      if (!email || !password) return showError('login-error', 'Please fill in both fields.');
+      setLoading('btn-login', true);
+      try {
+        await AuthAPI.login(email, password);
+        redirectAfterAuth();
+      } catch (e) {
+        showError('login-error', e.message);
+        setLoading('btn-login', false);
+      }
+    }
+
+    async function handleRegister() {
+      const name     = document.getElementById('reg-name').value.trim();
+      const email    = document.getElementById('reg-email').value.trim();
+      const password = document.getElementById('reg-password').value;
+      showError('reg-error', '');
+      if (!name || !email || !password) return showError('reg-error', 'All fields are required.');
+      setLoading('btn-register', true);
+      try {
+        await AuthAPI.register(name, email, password);
+        redirectAfterAuth(); // new user always goes to onboarding
+      } catch (e) {
+        showError('reg-error', e.message);
+        setLoading('btn-register', false);
+      }
+    }
+
+    // Enter key support
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Enter') return;
+      if (document.getElementById('form-login').style.display !== 'none') handleLogin();
+      else handleRegister();
+    });
+  </script>
+</body>
+</html>

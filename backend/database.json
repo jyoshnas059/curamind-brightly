@@ -1,0 +1,89 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "jyoshna",
+      "email": "spinkey567@gmail.com",
+      "password": "$2a$10$gWpBp2ezXcJ5xFgh6vvSZu/SWv.AS.7NZE6LNpwCWG4sMpPaFx8ra",
+      "created_at": "2026-05-27T04:58:57.154Z"
+    },
+    {
+      "id": 2,
+      "name": "jyo",
+      "email": "jyoshnasilaparasitti@gmail.com",
+      "password": "$2a$10$DyQiSfuZToLRC3T3V07shuZtf.aKdmyvjNjwPgGeQfAK0B9cK4mpm",
+      "created_at": "2026-05-27T10:37:16.298Z"
+    }
+  ],
+  "health_data": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "date": "2026-05-27",
+      "heart_rate": null,
+      "hydration": 2.2,
+      "calories": 1839,
+      "steps": 10000,
+      "bmi": 20.2,
+      "weight": 48,
+      "created_at": "2026-05-27T05:55:41.345Z"
+    },
+    {
+      "id": 2,
+      "user_id": 1,
+      "date": "2026-05-27",
+      "heart_rate": null,
+      "hydration": 1.7,
+      "calories": 1418,
+      "steps": 6000,
+      "bmi": 20.2,
+      "weight": 48,
+      "created_at": "2026-05-27T05:56:19.335Z"
+    },
+    {
+      "id": 3,
+      "user_id": 1,
+      "date": "2026-05-27",
+      "heart_rate": null,
+      "hydration": 1.7,
+      "calories": 1424,
+      "steps": 6000,
+      "bmi": 20.2,
+      "weight": 48,
+      "created_at": "2026-05-27T10:50:19.505Z"
+    },
+    {
+      "id": 4,
+      "user_id": 1,
+      "date": "2026-05-28",
+      "heart_rate": null,
+      "hydration": 1.6,
+      "calories": 1388,
+      "steps": 6000,
+      "bmi": 19,
+      "weight": 45,
+      "created_at": "2026-05-28T06:03:58.421Z"
+    }
+  ],
+  "mood_logs": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "mood": "Joyful",
+      "note": null,
+      "date": "2026-05-27",
+      "created_at": "2026-05-27T05:11:48.553Z"
+    },
+    {
+      "id": 2,
+      "user_id": 1,
+      "mood": "Tired",
+      "note": null,
+      "date": "2026-05-27",
+      "created_at": "2026-05-27T05:12:10.215Z"
+    }
+  ],
+  "symptom_logs": [],
+  "sleep_logs": [],
+  "medications": []
+}
