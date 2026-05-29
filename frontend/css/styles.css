@@ -735,3 +735,79 @@ body {
   .stats-row { flex-direction: column; }
   .nav-links { display: none; }
 }
+/* Quick action cards grid */
+.quick-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.quick-action-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  cursor: pointer;
+  transition: box-shadow 0.18s, transform 0.15s, border-color 0.18s;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.quick-action-card:hover {
+  border-color: var(--green-accent);
+  box-shadow: 0 4px 16px rgba(30,58,47,0.09);
+  transform: translateY(-2px);
+}
+
+/* Feature badge labels */
+.feat-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 500;
+  padding: 2px 9px;
+  border-radius: 10px;
+  margin-top: 8px;
+}
+
+.badge-live {
+  background: var(--green-light);
+  color: var(--green-dark);
+}
+
+.badge-soon {
+  background: var(--bg);
+  color: var(--text-light);
+  border: 1px solid var(--border);
+}
+
+/* Hover arrow on clickable feature cards */
+.feat-clickable {
+  cursor: pointer;
+}
+
+.feat-clickable::after {
+  content: '→';
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  font-size: 0.82rem;
+  color: var(--green-accent);
+  opacity: 0;
+  transform: translateX(-5px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.feat-clickable:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Responsive quick actions */
+@media (max-width: 700px) {
+  .quick-actions-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 400px) {
+  .quick-actions-grid { grid-template-columns: 1fr; }
+} 

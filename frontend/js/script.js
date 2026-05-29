@@ -401,3 +401,59 @@ function formatDate(iso) {
     return new Date(iso).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
   } catch { return iso; }
 }
+
+// ── HELPER: programmatic page switch ─────────
+// Used by home page quick-action cards and feature cards
+function switchPage(pageId) {
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const link = document.querySelector(`.nav-link[data-page="${pageId}"]`);
+  if (link) link.classList.add('active');
+  const page = document.getElementById(`page-${pageId}`);
+  if (page) page.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── HOME: LIVE STATS BAR ──────────────────────
+// Reads your existing API and fills the stats pills at the top of the home page
+async function loadHomeLiveStats() {
+  try {
+    const data = await DashboardAPI.getSummary();
+    const h = data.health || {};
+    let targets = {};
+    try { targets = JSON.parse(localStorage.getItem('cm_targets') || '{}'); } catch {}
+
+    const pills = [];
+    if (h.hydration)       pills.push({ icon: '💧', val: h.hydration + 'L',                        label: 'hydration' });
+    else if (targets.hydration) pills.push({ icon: '💧', val: targets.hydration + 'L',              label: 'target' });
+    if (h.calories)        pills.push({ icon: '🔥', val: Number(h.calories).toLocaleString() + ' kcal', label: 'calories' });
+    if (h.steps)           pills.push({ icon: '👣', val: Number(h.steps).toLocaleString(),           label: 'steps' });
+    if (h.bmi)             pills.push({ icon: '📈', val: 'BMI ' + h.bmi,                             label: '' });
+    if (data.mood?.mood)   pills.push({ icon: '😊', val: data.mood.mood,                             label: 'mood' });
+
+    const container = document.getElementById('home-stats-pills');
+    if (!container) return;
+
+    if (!pills.length) {
+      container.innerHTML = `<span style="font-size:0.8rem;color:var(--text-light);font-style:italic;">
+        No data yet — log your vitals to see live stats here.</span>`;
+      return;
+    }
+
+    container.innerHTML = pills.map(p => `
+      <div style="display:flex;align-items:center;gap:5px;padding:4px 12px;
+        border-radius:20px;background:var(--green-light);">
+        <span style="font-size:0.85rem;">${p.icon}</span>
+        <span style="font-size:0.82rem;font-weight:500;color:var(--green-dark);">${p.val}</span>
+        ${p.label ? `<span style="font-size:0.72rem;color:var(--text-muted);">${p.label}</span>` : ''}
+      </div>
+    `).join('');
+  } catch(e) { /* silent — stats bar is non-critical */ }
+}
+
+// Refresh stats bar whenever user navigates back to home
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    if (link.dataset.page === 'home') setTimeout(loadHomeLiveStats, 250);
+  });
+});

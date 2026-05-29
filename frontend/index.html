@@ -34,81 +34,167 @@
       <p class="eyebrow">EVERYTHING IN ONE PLACE</p>
       <h1 class="hero-title">Know your <em>health</em>.<br>Find your <em>care</em>.</h1>
       <p class="hero-sub">Each feature is designed with intention — minimal taps, maximum care.</p>
+
+      <!-- CTA BUTTONS -->
+      <div style="display:flex;gap:10px;margin-top:28px;flex-wrap:wrap;">
+        <button class="btn-guidance" onclick="switchPage('dashboard')">Go to Dashboard →</button>
+        <button class="btn-guidance" style="background:transparent;color:var(--green-dark);
+          border:1px solid var(--green-light);" onclick="switchPage('symptoms')">Check Symptoms</button>
+      </div>
     </div>
 
+    <!-- LIVE STATS BAR -->
+    <div id="home-live-bar" style="background:var(--bg-card);border:1px solid var(--border);
+      border-radius:var(--radius);padding:14px 20px;margin-bottom:28px;
+      display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--green-accent);
+          animation:pulse 2s infinite;"></div>
+        <span style="font-size:0.68rem;font-weight:500;color:var(--text-muted);
+          text-transform:uppercase;letter-spacing:0.1em;">Today</span>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;" id="home-stats-pills">
+        <span style="font-size:0.8rem;color:var(--text-light);font-style:italic;">
+          No data yet — log your vitals to see live stats here.
+        </span>
+      </div>
+    </div>
+
+    <!-- QUICK ACTIONS -->
+    <div style="margin-bottom:28px;">
+      <p style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;color:var(--text-light);
+        text-transform:uppercase;margin-bottom:12px;">Quick Actions</p>
+      <div class="quick-actions-grid">
+        <div class="quick-action-card" onclick="switchPage('dashboard');setTimeout(openLogModal,200)">
+          <div class="feat-icon">📊</div>
+          <div style="font-size:0.85rem;font-weight:500;color:var(--text-main);">Log Vitals</div>
+          <div style="font-size:0.75rem;color:var(--text-muted);">Heart rate, weight, steps</div>
+        </div>
+        <div class="quick-action-card" onclick="switchPage('symptoms')">
+          <div class="feat-icon">🔍</div>
+          <div style="font-size:0.85rem;font-weight:500;color:var(--text-main);">Check Symptoms</div>
+          <div style="font-size:0.75rem;color:var(--text-muted);">AI-guided next steps</div>
+        </div>
+        <div class="quick-action-card" onclick="switchPage('wellness');setTimeout(()=>openBreathing('box'),200)">
+          <div class="feat-icon">💨</div>
+          <div style="font-size:0.85rem;font-weight:500;color:var(--text-main);">Breathe</div>
+          <div style="font-size:0.75rem;color:var(--text-muted);">Box · 4-7-8 · Calm</div>
+        </div>
+        <div class="quick-action-card" onclick="switchPage('wellness');setTimeout(openJournal,200)">
+          <div class="feat-icon">📓</div>
+          <div style="font-size:0.85rem;font-weight:500;color:var(--text-main);">Journal</div>
+          <div style="font-size:0.75rem;color:var(--text-muted);">Gratitude & mood</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION DIVIDER -->
+    <div style="display:flex;align-items:center;gap:12px;margin:0 0 20px;">
+      <div style="flex:1;height:1px;background:var(--border);"></div>
+      <span style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;
+        color:var(--text-light);text-transform:uppercase;white-space:nowrap;">All Features</span>
+      <div style="flex:1;height:1px;background:var(--border);"></div>
+    </div>
+
+    <!-- FEATURES GRID -->
     <div class="features-grid">
-      <div class="feature-card">
+
+      <div class="feature-card feat-clickable" onclick="switchPage('dashboard')">
         <div class="feat-icon">📊</div>
         <span class="feat-num">01</span>
         <h3>Health Dashboard</h3>
         <p>BMI, hydration, calories & trends in one calm view.</p>
+        <span class="feat-badge badge-live">Live</span>
       </div>
-      <div class="feature-card">
+
+      <div class="feature-card feat-clickable" onclick="switchPage('symptoms')">
         <div class="feat-icon">🔍</div>
         <span class="feat-num">02</span>
         <h3>Symptom Checker</h3>
         <p>Describe how you feel — get AI-guided next steps.</p>
+        <span class="feat-badge badge-live">Live</span>
       </div>
-      <div class="feature-card">
+
+      <div class="feature-card feat-clickable" onclick="switchPage('wellness')">
         <div class="feat-icon">💊</div>
         <span class="feat-num">03</span>
         <h3>Medication Reminders</h3>
         <p>Never miss a dose. Smart, gentle nudges.</p>
+        <span class="feat-badge badge-live">Live</span>
       </div>
-      <div class="feature-card">
+
+      <div class="feature-card feat-clickable" onclick="switchPage('wellness')">
         <div class="feat-icon">🧠</div>
         <span class="feat-num">04</span>
         <h3>Mental Wellness</h3>
         <p>Mood, journaling, breathing & guided meditation.</p>
+        <span class="feat-badge badge-live">Live</span>
       </div>
-      <div class="feature-card">
-        <div class="feat-icon">♿</div>
-        <span class="feat-num">05</span>
-        <h3>Simplified UI Mode</h3>
-        <p>Large fonts, voice nav. Designed for every age.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feat-icon">🌐</div>
-        <span class="feat-num">06</span>
-        <h3>Multilingual</h3>
-        <p>Speak your language — text & voice.</p>
-      </div>
-      <div class="feature-card">
+
+      <div class="feature-card feat-clickable" onclick="switchPage('lifestyle')">
         <div class="feat-icon">🏃</div>
-        <span class="feat-num">07</span>
+        <span class="feat-num">05</span>
         <h3>Fitness Tracker</h3>
         <p>Steps, workouts & wearable sync.</p>
+        <span class="feat-badge badge-live">Live</span>
       </div>
-      <div class="feature-card">
+
+      <div class="feature-card feat-clickable" onclick="switchPage('lifestyle')">
         <div class="feat-icon">🥗</div>
-        <span class="feat-num">08</span>
+        <span class="feat-num">06</span>
         <h3>Nutrition Planner</h3>
         <p>Log meals, get recipes that fit your goals.</p>
+        <span class="feat-badge badge-live">Live</span>
       </div>
-      <div class="feature-card">
+
+      <div class="feature-card feat-clickable" onclick="switchPage('lifestyle')">
         <div class="feat-icon">🌙</div>
-        <span class="feat-num">09</span>
+        <span class="feat-num">07</span>
         <h3>Sleep Tracker</h3>
         <p>Understand your nights. Wake up restored.</p>
+        <span class="feat-badge badge-live">Live</span>
       </div>
-      <div class="feature-card">
+
+      <div class="feature-card feat-clickable" onclick="switchPage('community')">
         <div class="feat-icon">👥</div>
-        <span class="feat-num">10</span>
+        <span class="feat-num">08</span>
         <h3>Community</h3>
         <p>Forums, peer support & motivational challenges.</p>
+        <span class="feat-badge badge-live">Live</span>
       </div>
+
+      <div class="feature-card">
+        <div class="feat-icon">♿</div>
+        <span class="feat-num">09</span>
+        <h3>Simplified UI Mode</h3>
+        <p>Large fonts, voice nav. Designed for every age.</p>
+        <span class="feat-badge badge-soon">Coming soon</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feat-icon">🌐</div>
+        <span class="feat-num">10</span>
+        <h3>Multilingual</h3>
+        <p>Speak your language — text & voice.</p>
+        <span class="feat-badge badge-soon">Coming soon</span>
+      </div>
+
       <div class="feature-card">
         <div class="feat-icon">🔒</div>
         <span class="feat-num">11</span>
         <h3>Privacy & Security</h3>
         <p>HIPAA-grade storage, role access, 2FA.</p>
+        <span class="feat-badge badge-soon">Coming soon</span>
       </div>
+
       <div class="feature-card">
         <div class="feat-icon">🗣️</div>
         <span class="feat-num">12</span>
         <h3>Voice Support</h3>
         <p>Full voice navigation across all features.</p>
+        <span class="feat-badge badge-soon">Coming soon</span>
       </div>
+
     </div>
   </section>
 
