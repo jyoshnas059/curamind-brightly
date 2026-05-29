@@ -350,28 +350,71 @@
     <div class="hero">
       <p class="eyebrow">LIFESTYLE</p>
       <h1 class="hero-title">Move, eat, <em>rest</em> — in rhythm.</h1>
-      <p class="hero-sub">Track fitness, nutrition and sleep without the noise. Just the signals that matter to you.</p>
+      <p class="hero-sub">Click any card to log your fitness, nutrition or sleep.</p>
     </div>
 
     <div class="lifestyle-grid">
-      <div class="lifestyle-card">
-        <div class="lf-icon">🏃</div>
+
+      <!-- FITNESS -->
+      <div class="lifestyle-card" onclick="openFitnessTracker()" style="cursor:pointer;">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;">
+          <div class="lf-icon">🏃</div>
+          <span style="font-size:0.7rem;background:var(--green-light);color:var(--green-dark);
+            padding:3px 10px;border-radius:10px;font-weight:500;">Tap to log</span>
+        </div>
         <p class="lf-category">FITNESS</p>
         <div class="lf-value" id="ls-steps">—</div>
-        <p class="lf-sub">73% of today's goal</p>
+        <p class="lf-sub" id="ls-steps-sub">Steps today</p>
+        <div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:0.7rem;background:var(--green-light);color:var(--green-dark);
+            padding:2px 8px;border-radius:8px;">💪 Workouts</span>
+          <span style="font-size:0.7rem;background:var(--green-light);color:var(--green-dark);
+            padding:2px 8px;border-radius:8px;">👣 Steps</span>
+          <span style="font-size:0.7rem;background:var(--green-light);color:var(--green-dark);
+            padding:2px 8px;border-radius:8px;">🔥 Calories</span>
+        </div>
       </div>
-      <div class="lifestyle-card">
-        <div class="lf-icon">🥗</div>
+
+      <!-- NUTRITION -->
+      <div class="lifestyle-card" onclick="openNutritionTracker()" style="cursor:pointer;">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;">
+          <div class="lf-icon">🥗</div>
+          <span style="font-size:0.7rem;background:var(--green-light);color:var(--green-dark);
+            padding:3px 10px;border-radius:10px;font-weight:500;">Tap to log</span>
+        </div>
         <p class="lf-category">NUTRITION</p>
         <div class="lf-value" id="ls-calories">—</div>
-        <p class="lf-sub">Balanced · 92g protein</p>
+        <p class="lf-sub">Calories today</p>
+        <div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:0.7rem;background:var(--green-light);color:var(--green-dark);
+            padding:2px 8px;border-radius:8px;">🔍 Search food</span>
+          <span style="font-size:0.7rem;background:var(--green-light);color:var(--green-dark);
+            padding:2px 8px;border-radius:8px;">✏️ Manual</span>
+          <span style="font-size:0.7rem;background:var(--green-light);color:var(--green-dark);
+            padding:2px 8px;border-radius:8px;">📊 Macros</span>
+        </div>
       </div>
-      <div class="lifestyle-card">
-        <div class="lf-icon">🌙</div>
+
+      <!-- SLEEP -->
+      <div class="lifestyle-card" onclick="openSleepTracker()" style="cursor:pointer;">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;">
+          <div class="lf-icon">🌙</div>
+          <span style="font-size:0.7rem;background:var(--green-light);color:var(--green-dark);
+            padding:3px 10px;border-radius:10px;font-weight:500;">Tap to log</span>
+        </div>
         <p class="lf-category">SLEEP</p>
         <div class="lf-value" id="ls-sleep">—</div>
-        <p class="lf-sub" id="ls-sleep-sub">Not logged yet</p>
+        <p class="lf-sub" id="ls-sleep-sub">Last night</p>
+        <div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:0.7rem;background:var(--green-light);color:var(--green-dark);
+            padding:2px 8px;border-radius:8px;">⏰ Bedtime</span>
+          <span style="font-size:0.7rem;background:var(--green-light);color:var(--green-dark);
+            padding:2px 8px;border-radius:8px;">⭐ Quality</span>
+          <span style="font-size:0.7rem;background:var(--green-light);color:var(--green-dark);
+            padding:2px 8px;border-radius:8px;">📊 History</span>
+        </div>
       </div>
+
     </div>
   </section>
 
@@ -483,6 +526,9 @@
   <script src="js/journal.js"></script>
   <script src="js/meditation.js"></script>
   <script src="js/medication.js"></script>
+  <script src="js/fitness.js"></script>
+ <script src="js/nutrition.js"></script>
+ <script src="js/sleeptracker.js"></script>
 
 </body>
 </html>
