@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/auth.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-</head>
 <body>
 
   <!-- NAV -->
@@ -89,7 +88,7 @@
       </div>
     </div>
 
-    <!-- SECTION DIVIDER -->
+    <!-- DIVIDER -->
     <div style="display:flex;align-items:center;gap:12px;margin:0 0 20px;">
       <div style="flex:1;height:1px;background:var(--border);"></div>
       <span style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;
@@ -99,103 +98,78 @@
 
     <!-- FEATURES GRID -->
     <div class="features-grid">
-
       <div class="feature-card feat-clickable" onclick="switchPage('dashboard')">
-        <div class="feat-icon">📊</div>
-        <span class="feat-num">01</span>
+        <div class="feat-icon">📊</div><span class="feat-num">01</span>
         <h3>Health Dashboard</h3>
         <p>BMI, hydration, calories & trends in one calm view.</p>
         <span class="feat-badge badge-live">Live</span>
       </div>
-
       <div class="feature-card feat-clickable" onclick="switchPage('symptoms')">
-        <div class="feat-icon">🔍</div>
-        <span class="feat-num">02</span>
+        <div class="feat-icon">🔍</div><span class="feat-num">02</span>
         <h3>Symptom Checker</h3>
         <p>Describe how you feel — get AI-guided next steps.</p>
         <span class="feat-badge badge-live">Live</span>
       </div>
-
       <div class="feature-card feat-clickable" onclick="switchPage('wellness')">
-        <div class="feat-icon">💊</div>
-        <span class="feat-num">03</span>
+        <div class="feat-icon">💊</div><span class="feat-num">03</span>
         <h3>Medication Reminders</h3>
         <p>Never miss a dose. Smart, gentle nudges.</p>
         <span class="feat-badge badge-live">Live</span>
       </div>
-
       <div class="feature-card feat-clickable" onclick="switchPage('wellness')">
-        <div class="feat-icon">🧠</div>
-        <span class="feat-num">04</span>
+        <div class="feat-icon">🧠</div><span class="feat-num">04</span>
         <h3>Mental Wellness</h3>
         <p>Mood, journaling, breathing & guided meditation.</p>
         <span class="feat-badge badge-live">Live</span>
       </div>
-
       <div class="feature-card feat-clickable" onclick="switchPage('lifestyle')">
-        <div class="feat-icon">🏃</div>
-        <span class="feat-num">05</span>
+        <div class="feat-icon">🏃</div><span class="feat-num">05</span>
         <h3>Fitness Tracker</h3>
         <p>Steps, workouts & wearable sync.</p>
         <span class="feat-badge badge-live">Live</span>
       </div>
-
       <div class="feature-card feat-clickable" onclick="switchPage('lifestyle')">
-        <div class="feat-icon">🥗</div>
-        <span class="feat-num">06</span>
+        <div class="feat-icon">🥗</div><span class="feat-num">06</span>
         <h3>Nutrition Planner</h3>
         <p>Log meals, get recipes that fit your goals.</p>
         <span class="feat-badge badge-live">Live</span>
       </div>
-
       <div class="feature-card feat-clickable" onclick="switchPage('lifestyle')">
-        <div class="feat-icon">🌙</div>
-        <span class="feat-num">07</span>
+        <div class="feat-icon">🌙</div><span class="feat-num">07</span>
         <h3>Sleep Tracker</h3>
         <p>Understand your nights. Wake up restored.</p>
         <span class="feat-badge badge-live">Live</span>
       </div>
-
       <div class="feature-card feat-clickable" onclick="switchPage('community')">
-        <div class="feat-icon">👥</div>
-        <span class="feat-num">08</span>
+        <div class="feat-icon">👥</div><span class="feat-num">08</span>
         <h3>Community</h3>
         <p>Forums, peer support & motivational challenges.</p>
         <span class="feat-badge badge-live">Live</span>
       </div>
-
       <div class="feature-card">
-        <div class="feat-icon">♿</div>
-        <span class="feat-num">09</span>
+        <div class="feat-icon">♿</div><span class="feat-num">09</span>
         <h3>Simplified UI Mode</h3>
         <p>Large fonts, voice nav. Designed for every age.</p>
         <span class="feat-badge badge-soon">Coming soon</span>
       </div>
-
       <div class="feature-card">
-        <div class="feat-icon">🌐</div>
-        <span class="feat-num">10</span>
+        <div class="feat-icon">🌐</div><span class="feat-num">10</span>
         <h3>Multilingual</h3>
         <p>Speak your language — text & voice.</p>
         <span class="feat-badge badge-soon">Coming soon</span>
       </div>
-
       <div class="feature-card">
-        <div class="feat-icon">🔒</div>
-        <span class="feat-num">11</span>
+        <div class="feat-icon">🔒</div><span class="feat-num">11</span>
         <h3>Privacy & Security</h3>
         <p>HIPAA-grade storage, role access, 2FA.</p>
         <span class="feat-badge badge-soon">Coming soon</span>
       </div>
-
       <div class="feature-card">
-        <div class="feat-icon">🗣️</div>
-        <span class="feat-num">12</span>
+        <div class="feat-icon">🗣️</div><span class="feat-num">12</span>
         <h3>Voice Support</h3>
         <p>Full voice navigation across all features.</p>
         <span class="feat-badge badge-soon">Coming soon</span>
       </div>
-
     </div>
   </section>
 
@@ -294,14 +268,42 @@
     <div class="hero">
       <p class="eyebrow">SYMPTOM CHECKER</p>
       <h1 class="hero-title">Tell us how you <em>feel</em>.</h1>
-      <p class="hero-sub">Describe what you're experiencing and we'll guide you to gentle, sensible next steps.</p>
+      <p class="hero-sub">Describe what you're experiencing — we extract symptoms in real-time and give you structured, AI-guided next steps.</p>
     </div>
 
     <div class="symptom-box">
       <div class="privacy-tag">
         <span>🔒</span> Private · not stored without consent
       </div>
-      <textarea class="symptom-input" id="symptom-input" placeholder="I've had a dull headache since this morning, mostly behind my eyes..."></textarea>
+
+      <div style="position:relative;">
+        <textarea class="symptom-input" id="symptom-input" maxlength="500"
+          placeholder="I've had a dull headache since this morning, mostly behind my eyes. Also feeling a bit tired and my throat is slightly sore..."
+          oninput="onSymptomInput(this)"></textarea>
+        <div id="sym-char-count" style="position:absolute;bottom:10px;right:14px;
+          font-size:0.72rem;color:var(--text-light);">0 / 500</div>
+      </div>
+
+      <div id="sym-extracted-wrap" style="display:none;margin-top:14px;">
+        <p style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;
+          color:var(--text-light);text-transform:uppercase;margin-bottom:8px;">Detected symptoms</p>
+        <div id="sym-extracted-tags" style="display:flex;flex-wrap:wrap;gap:7px;"></div>
+      </div>
+
+      <div id="sym-severity-wrap" style="display:none;margin-top:12px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:0.72rem;font-weight:500;color:var(--text-muted);
+            text-transform:uppercase;letter-spacing:0.08em;">Detected severity:</span>
+          <div id="sym-severity-badge"></div>
+        </div>
+      </div>
+
+      <div id="sym-timeline-wrap" style="display:none;margin-top:14px;">
+        <p style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;
+          color:var(--text-light);text-transform:uppercase;margin-bottom:8px;">Recent timeline</p>
+        <div id="sym-timeline" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+      </div>
+
       <div class="common-symptoms">
         <p class="common-label">COMMON</p>
         <div class="symptom-tags">
@@ -311,29 +313,39 @@
           <span class="sym-tag">Fatigue</span>
           <span class="sym-tag">Cough</span>
           <span class="sym-tag">Stomach ache</span>
+          <span class="sym-tag">Nausea</span>
+          <span class="sym-tag">Dizziness</span>
           <span class="sym-tag">Anxiety</span>
           <span class="sym-tag">Insomnia</span>
+          <span class="sym-tag">Body pain</span>
+          <span class="sym-tag">Shortness of breath</span>
         </div>
       </div>
-      <button class="btn-guidance" id="btn-guidance">Get guidance →</button>
-    </div>
-    <!-- symptom history section -->
-     <div id="symptom-history" style="margin-top:24px; max-width:760px; display:none;">
-      <h3 style="font-size:0.85rem; color:var(--text-muted); letter-spacing:0.08em; margin-bottom:12px;">PAST LOGS</h3>
-      <div id="symptom-history-list"></div>
+
+      <button class="btn-guidance" id="btn-guidance">Analyse Symptoms →</button>
     </div>
 
-     <!-- AI Response Box -->
-    <div class="guidance-result" id="guidance-result" style="display:none;">
-      <div class="guidance-header">
-        <span class="guidance-dot"></span>
-        <strong>AI Guidance</strong>
-        <span class="guidance-badge">Not medical advice</span>
+    <div class="guidance-result" id="guidance-result" style="display:none;max-width:760px;margin-top:20px;">
+      <div class="guidance-header" style="justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="guidance-dot" id="guidance-dot"></span>
+          <strong>AI Analysis</strong>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div id="urgency-badge" style="display:none;"></div>
+          <span class="guidance-badge">Not medical advice</span>
+        </div>
       </div>
-      <div class="guidance-body" id="guidance-body"></div>
+      <div id="guidance-body"></div>
       <div class="guidance-disclaimer">
-        ⚠️ This is for informational purposes only. Please consult a qualified healthcare professional for diagnosis and treatment.
+        ⚠️ For informational purposes only. Please consult a qualified healthcare professional for diagnosis and treatment.
       </div>
+    </div>
+
+    <div id="symptom-history" style="margin-top:28px;max-width:760px;display:none;">
+      <h3 style="font-size:0.78rem;color:var(--text-muted);letter-spacing:0.08em;
+        margin-bottom:12px;text-transform:uppercase;">Past Logs</h3>
+      <div id="symptom-history-list"></div>
     </div>
   </section>
 
@@ -605,6 +617,7 @@
    </div>
  </div>
   <script src="js/api.js"></script>
+  <script src="js/symptoms.js"></script>
   <script src="js/script.js"></script>
   <script src="js/health-calculator.js"></script>
   <script src="js/reminders.js"></script>

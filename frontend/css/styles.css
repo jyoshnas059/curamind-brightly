@@ -735,7 +735,8 @@ body {
   .stats-row { flex-direction: column; }
   .nav-links { display: none; }
 }
-/* Quick action cards grid */
+/* ── HOME PAGE UPGRADES (Option B) ── */
+
 .quick-actions-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -760,7 +761,6 @@ body {
   transform: translateY(-2px);
 }
 
-/* Feature badge labels */
 .feat-badge {
   display: inline-block;
   font-size: 0.65rem;
@@ -781,7 +781,6 @@ body {
   border: 1px solid var(--border);
 }
 
-/* Hover arrow on clickable feature cards */
 .feat-clickable {
   cursor: pointer;
 }
@@ -803,62 +802,78 @@ body {
   transform: translateX(0);
 }
 
-/* Responsive quick actions */
 @media (max-width: 700px) {
   .quick-actions-grid { grid-template-columns: repeat(2, 1fr); }
 }
-
 @media (max-width: 400px) {
   .quick-actions-grid { grid-template-columns: 1fr; }
 }
 
-/* ── QUICK ACTION CARDS ── */
-.quick-actions-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+/* ── SYMPTOM PAGE UPGRADES (Option A) ── */
+
+@keyframes tagPop {
+  from { transform: scale(0.8); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
 }
 
-.quick-action-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px 16px;
-  cursor: pointer;
-  transition: box-shadow 0.2s, transform 0.15s;
+.severity-low    { background: #d4e8d8; color: #1e3a2f; }
+.severity-medium { background: #fff3cd; color: #7a5c00; border: 1px solid #f0d060; }
+.severity-high   { background: #ffe4e4; color: #c0392b; border: 1px solid #f5a5a5; }
+
+.urgency-monitor { background: #d4e8d8; color: #1e3a2f; }
+.urgency-doctor  { background: #fff3cd; color: #7a5c00; border: 1px solid #f0d060; }
+.urgency-urgent  {
+  background: #ffe4e4; color: #c0392b; border: 1px solid #f5a5a5;
+  animation: urgentPulse 1.5s ease infinite;
+}
+@keyframes urgentPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
+}
+
+.ai-section-card {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+.ai-section-card:last-child { border-bottom: none; }
+
+.ai-section-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.ai-section-body {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+.ai-section-body ul { padding-left: 18px; margin: 6px 0 0; }
+.ai-section-body li { margin-bottom: 5px; }
+.ai-section-body strong { color: var(--text-main); }
+
+.sym-timeline-pill {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 7px 12px;
+  font-size: 0.75rem;
 }
-
-.quick-action-card:hover {
-  box-shadow: var(--shadow);
-  transform: translateY(-2px);
-}
-
-/* ── FEATURE CARD CLICKABLE ── */
-.feat-clickable {
-  cursor: pointer;
-}
-.feat-clickable:hover {
-  background: #f0faf2;
-}
-
-/* ── FEATURE BADGE ── */
-.feat-badge {
-  display: inline-block;
-  font-size: 0.65rem;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 8px;
-  margin-top: 8px;
-  letter-spacing: 0.04em;
-}
-.badge-live {
-  background: var(--green-light);
-  color: var(--green-accent);
-}
-
-@media (max-width: 600px) {
-  .quick-actions-grid { grid-template-columns: repeat(2, 1fr); }
+.sym-timeline-pill .tp-date { font-size: 0.68rem; color: var(--text-light); }
+.sym-timeline-pill .tp-text {
+  color: var(--text-main);
+  font-weight: 500;
+  max-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -11,10 +11,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   injectUserNav();
   await loadDashboard();
-  await loadSymptomHistory();
   await loadSleepData();
   await loadMoodHistory();
-  loadHomeLiveStats(); 
+  await loadHomeLiveStats();
+  // loadSymptomHistory() is handled inside symptoms.js
 });
 
 // ── NAVIGATION ───────────────────────────────
@@ -34,6 +34,7 @@ navLinks.forEach(link => {
 });
 
 // ── LOAD DASHBOARD DATA ──────────────────────
+// ── REPLACE the loadDashboard() function in your script.js with this ──
 
 async function loadDashboard() {
   try {
@@ -186,125 +187,8 @@ document.querySelectorAll('.mood-tag').forEach(tag => {
   });
 });
 
-// ── SYMPTOM TAGS ─────────────────────────────
-document.querySelectorAll('.sym-tag').forEach(tag => {
-  tag.addEventListener('click', () => {
-    tag.classList.toggle('selected');
-    const input = document.getElementById('symptom-input');
-    if (tag.classList.contains('selected')) {
-      const current = input.value.trim();
-      input.value = current ? current + ', ' + tag.textContent : tag.textContent;
-    }
-  });
-});
-
-// ── LOAD SYMPTOM HISTORY ─────────────────────
-async function loadSymptomHistory() {
-  try {
-    const rows = await SymptomsAPI.getAll();
-    const container = document.getElementById('symptom-history');
-    const list = document.getElementById('symptom-history-list');
-    if (!rows.length) return;
-
-    container.style.display = 'block';
-    list.innerHTML = rows.slice(0, 5).map(r => `
-      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);
-           padding:14px 18px;margin-bottom:10px;">
-        <div style="font-size:0.82rem;font-weight:500;color:var(--text-main);margin-bottom:4px;">
-          ${escapeHtml(r.symptoms)}
-        </div>
-        <div style="font-size:0.75rem;color:var(--text-light);">${formatDate(r.created_at)}</div>
-      </div>
-    `).join('');
-  } catch (e) { /* silent */ }
-}
-
-// ── GUIDANCE BUTTON: GEMINI AI + SAVE ────────
-const GEMINI_KEY = 'AIzaSyCNvmYGkV0CN38tQbrI10eG9R4NNBq4peg';
-
-document.getElementById('btn-guidance')?.addEventListener('click', async () => {
-  const input     = document.getElementById('symptom-input');
-  const resultBox = document.getElementById('guidance-result');
-  const bodyEl    = document.getElementById('guidance-body');
-  const dot       = resultBox?.querySelector('.guidance-dot');
-  const val       = input?.value.trim();
-
-  if (!val) {
-    input.style.borderColor = 'var(--green-accent)';
-    input.placeholder = 'Please describe your symptoms first...';
-    input.focus();
-    setTimeout(() => {
-      input.style.borderColor = '';
-      input.placeholder = "I've had a dull headache since this morning, mostly behind my eyes...";
-    }, 2500);
-    return;
-  }
-
-  resultBox.style.display = 'block';
-  resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  dot?.classList.add('pulsing');
-  bodyEl.innerHTML = `
-    <div class="guidance-loading">
-      Analysing your symptoms
-      <div class="loading-dots"><span></span><span></span><span></span></div>
-    </div>`;
-
-  const prompt = `You are CuraMind, a calm and caring wellness assistant.
-The user describes their symptoms: "${val}"
-
-Respond in this exact structure:
-1. What you might be experiencing: (2-3 sentences explaining likely causes in plain language)
-2. Gentle next steps: (3-5 bullet points of practical self-care tips)
-3. When to see a doctor: (one sentence about warning signs)
-
-Keep the tone warm, never alarming. Never diagnose. Use simple language.`;
-
-  try {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${GEMINI_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { maxOutputTokens: 800, temperature: 0.7 }
-        })
-      }
-    );
-
-    if (!response.ok) {
-      const err = await response.json().catch(() => ({}));
-      throw new Error(err?.error?.message || `API error ${response.status}`);
-    }
-
-    const data = await response.json();
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response received.';
-    dot?.classList.remove('pulsing');
-
-    const formatted = text
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/^(\d\.\s[^\n]+)/gm, '<p class="section-title">$1</p>')
-      .replace(/^\*\s(.+)/gm, '<li>$1</li>')
-      .replace(/^-\s(.+)/gm, '<li>$1</li>')
-      .replace(/(<li>[\s\S]*?<\/li>)/g, '<ul>$&</ul>')
-      .replace(/\n{2,}/g, '<br>');
-
-    bodyEl.innerHTML = formatted;
-
-    // Save to database
-    try {
-      await SymptomsAPI.log(val, text);
-      showToast('Symptom log saved ✓');
-      await loadSymptomHistory();
-    } catch (e) { /* silent — AI response still shown */ }
-
-  } catch (err) {
-    dot?.classList.remove('pulsing');
-    bodyEl.innerHTML = `<div class="guidance-error">
-      ❌ Something went wrong: ${err.message}.<br>Check your API key and internet connection.
-    </div>`;
-  }
-});
+// ── SYMPTOM CHECKER ─ moved to symptoms.js ────
+// All symptom extraction, Gemini AI, tag handlers, history, urgency → symptoms.js
 
 // ── MODAL: LOG VITALS ────────────────────────
 function openLogModal() {
@@ -401,7 +285,6 @@ function formatDate(iso) {
     return new Date(iso).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
   } catch { return iso; }
 }
-
 // ── HELPER: programmatic page switch ─────────
 // Used by home page quick-action cards and feature cards
 function switchPage(pageId) {
@@ -415,7 +298,6 @@ function switchPage(pageId) {
 }
 
 // ── HOME: LIVE STATS BAR ──────────────────────
-// Reads your existing API and fills the stats pills at the top of the home page
 async function loadHomeLiveStats() {
   try {
     const data = await DashboardAPI.getSummary();
@@ -424,12 +306,12 @@ async function loadHomeLiveStats() {
     try { targets = JSON.parse(localStorage.getItem('cm_targets') || '{}'); } catch {}
 
     const pills = [];
-    if (h.hydration)       pills.push({ icon: '💧', val: h.hydration + 'L',                        label: 'hydration' });
-    else if (targets.hydration) pills.push({ icon: '💧', val: targets.hydration + 'L',              label: 'target' });
-    if (h.calories)        pills.push({ icon: '🔥', val: Number(h.calories).toLocaleString() + ' kcal', label: 'calories' });
-    if (h.steps)           pills.push({ icon: '👣', val: Number(h.steps).toLocaleString(),           label: 'steps' });
-    if (h.bmi)             pills.push({ icon: '📈', val: 'BMI ' + h.bmi,                             label: '' });
-    if (data.mood?.mood)   pills.push({ icon: '😊', val: data.mood.mood,                             label: 'mood' });
+    if (h.hydration)         pills.push({ icon: '💧', val: h.hydration + 'L',                          label: 'hydration' });
+    else if (targets.hydration) pills.push({ icon: '💧', val: targets.hydration + 'L',                  label: 'target' });
+    if (h.calories)          pills.push({ icon: '🔥', val: Number(h.calories).toLocaleString() + ' kcal', label: 'calories' });
+    if (h.steps)             pills.push({ icon: '👣', val: Number(h.steps).toLocaleString(),             label: 'steps' });
+    if (h.bmi)               pills.push({ icon: '📈', val: 'BMI ' + h.bmi,                              label: '' });
+    if (data.mood?.mood)     pills.push({ icon: '😊', val: data.mood.mood,                               label: 'mood' });
 
     const container = document.getElementById('home-stats-pills');
     if (!container) return;
@@ -448,10 +330,10 @@ async function loadHomeLiveStats() {
         ${p.label ? `<span style="font-size:0.72rem;color:var(--text-muted);">${p.label}</span>` : ''}
       </div>
     `).join('');
-  } catch(e) { /* silent — stats bar is non-critical */ }
+  } catch(e) { /* silent */ }
 }
 
-// Refresh stats bar whenever user navigates back to home
+// Refresh stats bar on nav back to home
 document.querySelectorAll('.nav-link').forEach(link => {
   link.addEventListener('click', () => {
     if (link.dataset.page === 'home') setTimeout(loadHomeLiveStats, 250);
