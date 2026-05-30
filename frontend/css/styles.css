@@ -735,7 +735,7 @@ body {
   .stats-row { flex-direction: column; }
   .nav-links { display: none; }
 }
-/* ── HOME PAGE UPGRADES (Option B) ── */
+/* ── HOME PAGE UPGRADES ── */
 
 .quick-actions-grid {
   display: grid;
@@ -809,7 +809,7 @@ body {
   .quick-actions-grid { grid-template-columns: 1fr; }
 }
 
-/* ── SYMPTOM PAGE UPGRADES (Option A) ── */
+/* ── SYMPTOM PAGE UPGRADES  ── */
 
 @keyframes tagPop {
   from { transform: scale(0.8); opacity: 0; }
@@ -876,4 +876,58 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* ── QUICK ACTION CARDS ── */
+.quick-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 0;
+}
+.quick-action-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.quick-action-card:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+/* ── FEATURE BADGES ── */
+.feat-clickable { cursor: pointer; }
+.feat-clickable:hover { background: #f0faf2; }
+.feat-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 8px;
+  margin-top: 8px;
+  letter-spacing: 0.04em;
+}
+.badge-live {
+  background: var(--green-light);
+  color: var(--green-accent);
+}
+.badge-soon {
+  background: #f3f4f6;
+  color: #9ca3af;
+}
+
+/* ── SYMPTOM TAG POP ANIMATION ── */
+@keyframes tagPop {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 600px) {
+  .quick-actions-grid { grid-template-columns: repeat(2, 1fr); }
 }

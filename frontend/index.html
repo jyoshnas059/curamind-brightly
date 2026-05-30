@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/auth.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
 <body>
 
   <!-- NAV -->
@@ -265,89 +266,83 @@
 
   <!-- ── PAGE: SYMPTOMS ── -->
   <section class="page" id="page-symptoms">
-    <div class="hero">
-      <p class="eyebrow">SYMPTOM CHECKER</p>
-      <h1 class="hero-title">Tell us how you <em>feel</em>.</h1>
-      <p class="hero-sub">Describe what you're experiencing — we extract symptoms in real-time and give you structured, AI-guided next steps.</p>
+  <div class="hero">
+    <p class="eyebrow">SYMPTOM CHECKER</p>
+    <h1 class="hero-title">Tell us how you <em>feel</em>.</h1>
+    <p class="hero-sub">Describe what you're experiencing — AI analyses severity and guides next steps.</p>
+  </div>
+
+  <!-- Symptom timeline -->
+  <div id="sym-timeline-wrap" style="display:none;margin-bottom:20px;max-width:760px;">
+    <p style="font-size:0.7rem;font-weight:600;letter-spacing:0.1em;color:var(--text-muted);
+      margin-bottom:10px;">RECENT CHECKS</p>
+    <div id="sym-timeline" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+  </div>
+
+  <div class="symptom-box">
+    <div class="privacy-tag"><span>🔒</span> Private · saved to your account</div>
+
+    <textarea class="symptom-input" id="symptom-input" maxlength="500"
+      oninput="onSymptomInput(this)"
+      placeholder="I've had a dull headache since this morning, mostly behind my eyes..."></textarea>
+
+    <!-- Character count -->
+    <div style="text-align:right;font-size:0.72rem;color:var(--text-light);
+      margin-top:4px;" id="sym-char-count">0 / 500</div>
+
+    <!-- Extracted symptoms -->
+    <div id="sym-extracted-wrap" style="display:none;margin-top:12px;">
+      <p style="font-size:0.7rem;font-weight:600;letter-spacing:0.1em;
+        color:var(--text-muted);margin-bottom:8px;">DETECTED SYMPTOMS</p>
+      <div id="sym-extracted-tags" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
     </div>
 
-    <div class="symptom-box">
-      <div class="privacy-tag">
-        <span>🔒</span> Private · not stored without consent
-      </div>
-
-      <div style="position:relative;">
-        <textarea class="symptom-input" id="symptom-input" maxlength="500"
-          placeholder="I've had a dull headache since this morning, mostly behind my eyes. Also feeling a bit tired and my throat is slightly sore..."
-          oninput="onSymptomInput(this)"></textarea>
-        <div id="sym-char-count" style="position:absolute;bottom:10px;right:14px;
-          font-size:0.72rem;color:var(--text-light);">0 / 500</div>
-      </div>
-
-      <div id="sym-extracted-wrap" style="display:none;margin-top:14px;">
-        <p style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;
-          color:var(--text-light);text-transform:uppercase;margin-bottom:8px;">Detected symptoms</p>
-        <div id="sym-extracted-tags" style="display:flex;flex-wrap:wrap;gap:7px;"></div>
-      </div>
-
-      <div id="sym-severity-wrap" style="display:none;margin-top:12px;">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <span style="font-size:0.72rem;font-weight:500;color:var(--text-muted);
-            text-transform:uppercase;letter-spacing:0.08em;">Detected severity:</span>
-          <div id="sym-severity-badge"></div>
-        </div>
-      </div>
-
-      <div id="sym-timeline-wrap" style="display:none;margin-top:14px;">
-        <p style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;
-          color:var(--text-light);text-transform:uppercase;margin-bottom:8px;">Recent timeline</p>
-        <div id="sym-timeline" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
-      </div>
-
-      <div class="common-symptoms">
-        <p class="common-label">COMMON</p>
-        <div class="symptom-tags">
-          <span class="sym-tag">Headache</span>
-          <span class="sym-tag">Fever</span>
-          <span class="sym-tag">Sore throat</span>
-          <span class="sym-tag">Fatigue</span>
-          <span class="sym-tag">Cough</span>
-          <span class="sym-tag">Stomach ache</span>
-          <span class="sym-tag">Nausea</span>
-          <span class="sym-tag">Dizziness</span>
-          <span class="sym-tag">Anxiety</span>
-          <span class="sym-tag">Insomnia</span>
-          <span class="sym-tag">Body pain</span>
-          <span class="sym-tag">Shortness of breath</span>
-        </div>
-      </div>
-
-      <button class="btn-guidance" id="btn-guidance">Analyse Symptoms →</button>
+    <!-- Severity badge -->
+    <div id="sym-severity-wrap" style="display:none;margin-top:12px;
+      display:flex;align-items:center;gap:8px;">
+      <span style="font-size:0.72rem;color:var(--text-muted);">Severity:</span>
+      <span id="sym-severity-badge"></span>
     </div>
 
-    <div class="guidance-result" id="guidance-result" style="display:none;max-width:760px;margin-top:20px;">
-      <div class="guidance-header" style="justify-content:space-between;">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <span class="guidance-dot" id="guidance-dot"></span>
-          <strong>AI Analysis</strong>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <div id="urgency-badge" style="display:none;"></div>
-          <span class="guidance-badge">Not medical advice</span>
-        </div>
-      </div>
-      <div id="guidance-body"></div>
-      <div class="guidance-disclaimer">
-        ⚠️ For informational purposes only. Please consult a qualified healthcare professional for diagnosis and treatment.
+    <!-- Common symptom tags -->
+    <div class="common-symptoms">
+      <p class="common-label">COMMON</p>
+      <div class="symptom-tags">
+        <span class="sym-tag">Headache</span>
+        <span class="sym-tag">Fever</span>
+        <span class="sym-tag">Sore throat</span>
+        <span class="sym-tag">Fatigue</span>
+        <span class="sym-tag">Cough</span>
+        <span class="sym-tag">Stomach ache</span>
+        <span class="sym-tag">Anxiety</span>
+        <span class="sym-tag">Insomnia</span>
       </div>
     </div>
 
-    <div id="symptom-history" style="margin-top:28px;max-width:760px;display:none;">
-      <h3 style="font-size:0.78rem;color:var(--text-muted);letter-spacing:0.08em;
-        margin-bottom:12px;text-transform:uppercase;">Past Logs</h3>
-      <div id="symptom-history-list"></div>
+    <button class="btn-guidance" id="btn-guidance">Get guidance →</button>
+  </div>
+
+  <!-- Past logs -->
+  <div id="symptom-history" style="margin-top:24px;max-width:760px;display:none;">
+    <h3 style="font-size:0.85rem;color:var(--text-muted);letter-spacing:0.08em;
+      margin-bottom:12px;">PAST LOGS</h3>
+    <div id="symptom-history-list"></div>
+  </div>
+
+  <!-- AI Guidance result -->
+  <div class="guidance-result" id="guidance-result" style="display:none;">
+    <div class="guidance-header">
+      <span class="guidance-dot" id="guidance-dot"></span>
+      <strong>AI Guidance</strong>
+      <span id="urgency-badge" style="display:none;margin-left:8px;"></span>
+      <span class="guidance-badge">Not medical advice</span>
     </div>
-  </section>
+    <div class="guidance-body" id="guidance-body"></div>
+    <div class="guidance-disclaimer">
+      ⚠️ This is for informational purposes only. Please consult a qualified healthcare professional.
+    </div>
+  </div>
+</section>
 
   <!-- ── PAGE: WELLNESS ── -->
   <section class="page" id="page-wellness">
