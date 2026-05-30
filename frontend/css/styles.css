@@ -810,4 +810,55 @@ body {
 
 @media (max-width: 400px) {
   .quick-actions-grid { grid-template-columns: 1fr; }
-} 
+}
+
+/* ── QUICK ACTION CARDS ── */
+.quick-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.quick-action-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.quick-action-card:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+/* ── FEATURE CARD CLICKABLE ── */
+.feat-clickable {
+  cursor: pointer;
+}
+.feat-clickable:hover {
+  background: #f0faf2;
+}
+
+/* ── FEATURE BADGE ── */
+.feat-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 8px;
+  margin-top: 8px;
+  letter-spacing: 0.04em;
+}
+.badge-live {
+  background: var(--green-light);
+  color: var(--green-accent);
+}
+
+@media (max-width: 600px) {
+  .quick-actions-grid { grid-template-columns: repeat(2, 1fr); }
+}

@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadSymptomHistory();
   await loadSleepData();
   await loadMoodHistory();
+  loadHomeLiveStats(); 
 });
 
 // ── NAVIGATION ───────────────────────────────
@@ -33,7 +34,6 @@ navLinks.forEach(link => {
 });
 
 // ── LOAD DASHBOARD DATA ──────────────────────
-// ── REPLACE the loadDashboard() function in your script.js with this ──
 
 async function loadDashboard() {
   try {
