@@ -58,6 +58,10 @@ const AuthAPI = {
     });
     Auth.setToken(data.token);
     Auth.setUser(data.user);
+    try {
+  const me = await apiFetch('/auth/me');
+  Auth.setUser(me);
+     } catch {}
     return data;
   },
 
@@ -146,7 +150,24 @@ function injectUserNav() {
   const nav = document.querySelector('.nav-auth');
   if (nav) {
     nav.innerHTML = `
+      <div id="streak-widget" style="display:none;align-items:center;gap:5px;"></div>
+      <button onclick="openWeeklyInsights()" title="Weekly Insights"
+        style="background:none;border:1px solid var(--border);border-radius:20px;
+        padding:6px 12px;font-size:0.78rem;color:var(--text-muted);cursor:pointer;
+        font-family:'DM Sans',sans-serif;">📊 Insights</button>
+      <button onclick="openGoals()" title="Goals & Streaks"
+        style="background:none;border:1px solid var(--border);border-radius:20px;
+        padding:6px 12px;font-size:0.78rem;color:var(--text-muted);cursor:pointer;
+        font-family:'DM Sans',sans-serif;">🎯 Goals</button>
+      <button onclick="openSymptomPatterns()" title="Symptom Patterns"
+        style="background:none;border:1px solid var(--border);border-radius:20px;
+        padding:6px 12px;font-size:0.78rem;color:var(--text-muted);cursor:pointer;
+        font-family:'DM Sans',sans-serif;">🔍 Patterns</button>
       <span class="nav-username">👤 ${user.name}</span>
+      <button onclick="openProfilePage()"
+        style="background:none;border:1px solid var(--border);border-radius:20px;
+        padding:6px 14px;font-size:0.82rem;color:var(--text-muted);cursor:pointer;
+        font-family:'DM Sans',sans-serif;">Profile</button>
       <button class="btn-logout" onclick="Auth.logout()">Logout</button>
     `;
   }

@@ -329,11 +329,52 @@ app.get('/api/dashboard', auth, (req, res) => {
   res.json({ health, mood, sleep, medications });
 });
 
+
+// ── CHANGE PASSWORD ──────────────────────────
+// POST /api/auth/change-password
+app.post('/api/auth/change-password', auth, async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  if (!currentPassword || !newPassword)
+    return res.status(400).json({ error: 'Both passwords required' });
+  if (newPassword.length < 6)
+    return res.status(400).json({ error: 'New password must be at least 6 characters' });
+ 
+  const db   = readDB();
+  const user = db.users.find(u => u.id === req.user.id);
+  if (!user) return res.status(404).json({ error: 'User not found' });
+ 
+  const match = await bcrypt.compare(currentPassword, user.password);
+  if (!match) return res.status(401).json({ error: 'Current password is incorrect' });
+ 
+  user.password = await bcrypt.hash(newPassword, 10);
+  writeDB(db);
+  res.json({ message: 'Password changed successfully' });
+});
+ 
+// ── GOALS (stored in DB for persistence) ─────
+// GET /api/goals
+app.get('/api/goals', auth, (req, res) => {
+  const db   = readDB();
+  const user = db.users.find(u => u.id === req.user.id);
+  res.json(user?.goals || {});
+});
+ 
+// POST /api/goals
+app.post('/api/goals', auth, (req, res) => {
+  const db   = readDB();
+  const user = db.users.find(u => u.id === req.user.id);
+  if (!user) return res.status(404).json({ error: 'User not found' });
+  user.goals = { ...(user.goals || {}), ...req.body };
+  writeDB(db);
+  res.json({ message: 'Goals saved', goals: user.goals });
+});
+ 
+ 
 // ── CATCH-ALL → serve frontend ───────────────
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
-
+ 
 // ── START ────────────────────────────────────
 app.listen(PORT, () => {
   console.log(`\n🌿 CuraMind server running at http://localhost:${PORT}`);

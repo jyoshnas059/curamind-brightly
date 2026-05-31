@@ -20,6 +20,13 @@
       "email": "jyoshnas059a@gmail.com",
       "password": "$2a$10$31EAh.rTBo9A3AM1DVItfeCjG4j/0KmznuuIVJbUQX5fjIjSGwXsS",
       "created_at": "2026-05-30T07:13:47.590Z"
+    },
+    {
+      "id": 4,
+      "name": "mahesh",
+      "email": "mahesh@gmail.com",
+      "password": "$2a$10$2Ux5SOtRIDCIwp9vdwVgWuqrGNpLekkk1mERKZIyD3yAIZl0Sbxby",
+      "created_at": "2026-05-30T17:44:32.652Z"
     }
   ],
   "health_data": [
@@ -118,6 +125,18 @@
       "bmi": 19,
       "weight": 45,
       "created_at": "2026-05-30T16:24:26.127Z"
+    },
+    {
+      "id": 9,
+      "user_id": 4,
+      "date": "2026-05-30",
+      "heart_rate": null,
+      "hydration": 2.1,
+      "calories": 1566,
+      "steps": 8000,
+      "bmi": 26,
+      "weight": 60,
+      "created_at": "2026-05-30T17:47:34.438Z"
     }
   ],
   "mood_logs": [
@@ -144,6 +163,14 @@
       "note": null,
       "date": "2026-05-30",
       "created_at": "2026-05-30T16:25:32.316Z"
+    },
+    {
+      "id": 4,
+      "user_id": 4,
+      "mood": "Calm",
+      "note": null,
+      "date": "2026-05-31",
+      "created_at": "2026-05-31T10:48:03.038Z"
     }
   ],
   "symptom_logs": [],
